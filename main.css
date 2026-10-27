@@ -1,0 +1,168 @@
+/* ==========================================================
+   Design tokens — the base of the shared style.
+   Reuse these values when restyling the Quartz wikis.
+   ========================================================== */
+:root {
+  /* Surfaces */
+  --bg:            #121212;
+  --surface:       #1c1c1e;
+  --border:        #2e2e30;
+
+  /* Text */
+  --text:          #e8e4de;
+  --text-muted:    #9b968f;
+
+  /* Accent (interactive elements) */
+  --accent:        #ff8c1a;
+  --accent-hover:  #ffa54d;
+  --accent-glow:   rgba(255, 140, 26, 0.18);
+
+  /* Type */
+  --font-body:     system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading:  Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+
+  /* Shape & motion */
+  --radius:        10px;
+  --transition:    180ms ease;
+}
+
+/* ==========================================================
+   Base
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ==========================================================
+   Header
+   ========================================================== */
+.site-header {
+  width: 100%;
+  padding: 3.5rem 1rem 2.5rem;
+  text-align: center;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: 0.02em;
+}
+
+/* Thin orange rule under the title */
+.site-header h1::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 2px;
+  margin: 1rem auto 0;
+  background: var(--accent);
+}
+
+/* ==========================================================
+   Portal cards
+   ========================================================== */
+.portal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  padding: 1rem 1rem 4rem;
+}
+
+.portal-card {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+  border-radius: var(--radius);
+}
+
+.portal-card figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.portal-card img {
+  display: block;
+  width: 250px;
+  height: 400px;
+  object-fit: cover;          /* any image fills the frame without distortion */
+  background: var(--surface); /* shows while the image loads or if it's missing */
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.portal-card figcaption {
+  margin-top: 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  transition: color var(--transition);
+}
+
+.portal-card:hover img,
+.portal-card:focus-visible img {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 4px var(--accent-glow),
+    0 12px 28px rgba(0, 0, 0, 0.5);
+  transform: translateY(-4px);
+}
+
+.portal-card:hover figcaption,
+.portal-card:focus-visible figcaption {
+  color: var(--accent);
+}
+
+/* The image border already shows focus, so drop the outer outline */
+.portal-card:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-card img,
+  .portal-card figcaption {
+    transition: none;
+  }
+  .portal-card:hover img,
+  .portal-card:focus-visible img {
+    transform: none;
+  }
+}
